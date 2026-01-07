@@ -84,15 +84,17 @@ def listen_irc(channels):
                                 sender = prefix.split("!")[0].lstrip(":")
                                 print(f"[{target}] <{sender}> {text}")
                                 try:
-                                    if text.find("sumdebot bannings")!=-1:
+                                    if text.lower().find("sumdebot bannings")!=-1:
                                         irc.send(f"PRIVMSG {channel} :RANDOM MONTHLY BANNINGS\r\n".encode())
                                         irc.send(f"PRIVMSG {channel} :{random.choice(people)}: You lose!\r\n".encode())
-                                    elif text.find("sumdebot")!=-1 and text.find("help")!=-1:
-                                        irc.send(f"PRIVMSG {channel} :I am a bot that spits out random premade responses when I am called upon. https://github.com/Sumde/sumdebot\r\n".encode())
-                                    elif text.find("sumdebot")!=-1:
-                                            for i in range(random.randint(1,3)):
-                                                message = markov.generate_from_prompt(text)
-                                                irc.send(f"PRIVMSG {channel} :{message}\r\n".encode())
+                                    elif text.lower().find("sumdebot")!=-1 and text.lower().find("help")!=-1:
+                                        irc.send(f"PRIVMSG {channel} :I am a Markov Chain that spits out answers similar to what sumde says. https://github.com/Sumde/sumdebot\r\n".encode())
+                                    elif text.lower().find("sumdebot")!=-1 and text.lower().find("aide")!=-1:
+                                        irc.send(f"PRIVMSG {channel} :Je suis un « chaîne de Markov » que dit mots ce similaire à ce que dit sumde. https://github.com/Sumde/sumdebot\r\n".encode())
+                                    elif text.lower().find("sumdebot")!=-1:
+                                        for i in range(random.randint(1,3)):
+                                            message = markov.generate_from_prompt(text)
+                                            irc.send(f"PRIVMSG {channel} :{message}\r\n".encode())
                                 except Exception as e:
                                     print("Error: ", e)
                         except Exception as e:
