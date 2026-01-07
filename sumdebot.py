@@ -90,8 +90,9 @@ def listen_irc(channels):
                                     elif text.find("sumdebot help")!=-1:
                                         irc.send(f"PRIVMSG {channel} :I am a bot that spits out random premade responses when I am called upon. https://github.com/Sumde/sumdebot\r\n".encode())
                                     elif text.find("sumdebot")!=-1:
-                                        message = markov.generate()
-                                        irc.send(f"PRIVMSG {channel} :{message}\r\n".encode())
+                                            for i in range(random.randint(1,3)):
+                                                message = markov.generate_from_prompt(text)
+                                                irc.send(f"PRIVMSG {channel} :{message}\r\n".encode())
                                 except Exception as e:
                                     print("Error: ", e)
                         except Exception as e:
