@@ -87,7 +87,7 @@ def listen_irc(channels):
                                     if text.find("sumdebot bannings")!=-1:
                                         irc.send(f"PRIVMSG {channel} :RANDOM MONTHLY BANNINGS\r\n".encode())
                                         irc.send(f"PRIVMSG {channel} :{random.choice(people)}: You lose!\r\n".encode())
-                                    elif text.find("sumdebot help")!=-1:
+                                    elif text.find("sumdebot")!=-1 and text.find("help")!=-1:
                                         irc.send(f"PRIVMSG {channel} :I am a bot that spits out random premade responses when I am called upon. https://github.com/Sumde/sumdebot\r\n".encode())
                                     elif text.find("sumdebot")!=-1:
                                             for i in range(random.randint(1,3)):

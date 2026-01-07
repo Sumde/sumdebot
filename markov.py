@@ -32,6 +32,8 @@ class MarkovBot:
         key = None
         for i in range(len(prompt_words) - self.order + 1):
             candidate = tuple(prompt_words[i:i+self.order])
+            if prompt_words[i].find("sumdebot"):
+                continue
             if candidate in self.model:
                 key = candidate
                 break
