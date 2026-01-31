@@ -2,6 +2,8 @@ import random
 import re
 from collections import defaultdict
 
+word_match = 1
+
 class MarkovBot:
     def __init__(self, order=2):
         self.order = order
@@ -26,13 +28,13 @@ class MarkovBot:
                 next_word = words[i+self.order]
                 self.model[key].append(next_word)
 
-    def generate_from_prompt(self, prompt, max_words=25):
+    def generate_from_prompt(self, prompt, max_words=50):
         prompt_words = prompt.split()
         
         key = None
-        for i in range(len(prompt_words) - self.order + 1):
-            candidate = tuple(prompt_words[i:i+self.order])
-            if prompt_words[i].find("sumdebot"):
+        for i in range(len(prompt_words) - word_match + 1):
+            candidate = tuple(prompt_words[i:i+word_match])
+            if prompt_words[i].find("sumdebot")!=-1:
                 continue
             if candidate in self.model:
                 key = candidate
