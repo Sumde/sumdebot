@@ -1,5 +1,6 @@
 # I was a bit lazy so I copied and pasted code from another project I built, so the code won't make sense.
 
+import re
 import socket
 import time
 import threading
@@ -14,7 +15,7 @@ channels = [""]
 datafile = ""
 
 ignore_words = [
-'\n', '_', 'sumdebot',
+'\n', '_',
 'a', 'about', 'above', 'after', 'again', 'against', 'ah', 'all', 'also',
 'am', 'an', 'and', 'any', 'anything', 'are', 'as', 'at', 'back', 'be', 'been',
 'before', 'being', 'below', 'between', 'both', 'but', 'by', 'can', 'cant',
@@ -38,7 +39,7 @@ ignore_words = [
 ] # uh partially stolen list from nikkybot hehe
 
 ignore_words_french = [
-'\n', '_', 'sumdebot',
+'\n', '_',
 'un', 'à propos', 'au-dessus', 'après', 'encore', 'contre', 'ah', 'tout', 'aussi',
 'suis', 'une', 'et', 'n\'importe quel', 'n\'importe quoi', 'sont', 'comme', 'à', 'retour', 'être', 'été',
 'avant', 'étant', 'en dessous', 'entre', 'les deux', 'mais', 'par', 'peut', 'ne peut pas',
@@ -132,8 +133,11 @@ def listen_irc(channels):
                                 sender = prefix.split("!")[0].lstrip(":")
                                 print(f"[{target}] <{sender}> {text}")
                                 try:
+                                    text = text.lower()
+                                    text = ' '+text
+                                    text = text+' '
                                     for word in ignore_words:
-                                        text = text.replace(word, "")
+                                        text = re.sub('\W'+re.escape(word)+'\W','',text)
                                     
                                     if text.lower().find("sumdebot bannings")!=-1:
                                         irc.send(f"PRIVMSG {channel} :RANDOM MONTHLY BANNINGS\r\n".encode())
